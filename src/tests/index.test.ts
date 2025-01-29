@@ -22,10 +22,22 @@ describe('POST /sum', () => {
       method: RequestMethodEnum.Sum,
     });
 
+    vi.spyOn(prisma.request, 'create');
+
     const res = await request(app).post('/sum').send({
       a: 1,
       b: 2,
     });
+
+    expect(prisma.request.create).toHaveBeenCalledWith({
+      data: {
+        a: 1,
+        b: 2,
+        answer: 3,
+        method: RequestMethodEnum.Sum,
+      },
+    });
+
     expect(res.statusCode).toBe(200);
     expect(res.body.answer).toBe(3);
     expect(res.body).toHaveProperty('id');
@@ -67,10 +79,22 @@ describe('POST /multiply', () => {
       method: RequestMethodEnum.Multiply,
     });
 
+    vi.spyOn(prisma.request, 'create');
+
     const res = await request(app).post('/multiply').send({
       a: 1,
       b: 2,
     });
+
+    expect(prisma.request.create).toHaveBeenCalledWith({
+      data: {
+        a: 1,
+        b: 2,
+        answer: 2,
+        method: RequestMethodEnum.Multiply,
+      },
+    });
+
     expect(res.statusCode).toBe(200);
     expect(res.body.answer).toBe(2);
     expect(res.body).toHaveProperty('id');
