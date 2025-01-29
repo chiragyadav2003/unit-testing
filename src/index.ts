@@ -25,8 +25,8 @@ app.post('/sum', async (req, res) => {
 
   const data = await prisma.request.create({
     data: {
-      b: parsedResponse.data.a,
-      a: parsedResponse.data.b,
+      a: parsedResponse.data.a,
+      b: parsedResponse.data.b,
       answer,
       method: RequestMethodEnum.Sum,
     },
@@ -72,8 +72,8 @@ app.post('/multiply', async (req, res) => {
 
   const data = await prisma.request.create({
     data: {
-      b: parsedResponse.data.a,
-      a: parsedResponse.data.b,
+      a: parsedResponse.data.a,
+      b: parsedResponse.data.b,
       answer,
       method: RequestMethodEnum.Multiply,
     },
