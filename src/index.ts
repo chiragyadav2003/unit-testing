@@ -1,5 +1,7 @@
 import express from 'express';
 import { z } from 'zod';
+import { prisma } from './libs/prisma';
+import { RequestMethodEnum } from '@prisma/client';
 
 export const app = express();
 app.use(express.json());
@@ -9,7 +11,7 @@ const inputSchema = z.object({
   b: z.number(),
 });
 
-app.post('/sum', (req, res) => {
+app.post('/sum', async (req, res) => {
   const parsedResponse = inputSchema.safeParse(req.body);
 
   if (!parsedResponse.success) {
@@ -20,6 +22,15 @@ app.post('/sum', (req, res) => {
   }
 
   const answer = parsedResponse.data.a + parsedResponse.data.b;
+
+  const data = await prisma.request.create({
+    data: {
+      a: parsedResponse.data.a,
+      b: parsedResponse.data.b,
+      answer,
+      method: RequestMethodEnum.Sum,
+    },
+  });
 
   res.json({
     answer,
@@ -46,7 +57,7 @@ app.get('/sum', (req, res) => {
   });
 });
 
-app.post('/multiply', (req, res) => {
+app.post('/multiply', async (req, res) => {
   const parsedResponse = inputSchema.safeParse(req.body);
 
   if (!parsedResponse.success) {
@@ -57,6 +68,15 @@ app.post('/multiply', (req, res) => {
   }
 
   const answer = parsedResponse.data.a * parsedResponse.data.b;
+
+  const data = await prisma.request.create({
+    data: {
+      a: parsedResponse.data.a,
+      b: parsedResponse.data.b,
+      answer,
+      method: RequestMethodEnum.Multiply,
+    },
+  });
 
   res.json({
     answer,
