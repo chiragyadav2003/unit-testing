@@ -34,6 +34,7 @@ app.post('/sum', async (req, res) => {
 
   res.json({
     answer,
+    id: data.id,
   });
 });
 
@@ -80,5 +81,6 @@ app.post('/multiply', async (req, res) => {
 
   res.json({
     answer,
+    id: data.id,
   });
 });
