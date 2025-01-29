@@ -15,9 +15,7 @@ app.post('/sum', async (req, res) => {
   const parsedResponse = inputSchema.safeParse(req.body);
 
   if (!parsedResponse.success) {
-    res.status(411).json({
-      message: 'Incorrect inputs',
-    });
+    res.status(411).json({ message: 'Incorrect inputs' });
     return;
   }
 
@@ -32,10 +30,7 @@ app.post('/sum', async (req, res) => {
     },
   });
 
-  res.json({
-    answer,
-    id: data.id,
-  });
+  res.json({ answer, id: data.id });
 });
 
 app.get('/sum', (req, res) => {
@@ -45,26 +40,20 @@ app.get('/sum', (req, res) => {
   });
 
   if (!parsedResponse.success) {
-    res.status(411).json({
-      message: 'Incorrect inputs',
-    });
+    res.status(411).json({ message: 'Incorrect inputs' });
     return;
   }
 
   const answer = parsedResponse.data.a + parsedResponse.data.b;
 
-  res.json({
-    answer,
-  });
+  res.json({ answer });
 });
 
 app.post('/multiply', async (req, res) => {
   const parsedResponse = inputSchema.safeParse(req.body);
 
   if (!parsedResponse.success) {
-    res.status(411).json({
-      message: 'Incorrect inputs',
-    });
+    res.status(411).json({ message: 'Incorrect inputs' });
     return;
   }
 
@@ -79,8 +68,5 @@ app.post('/multiply', async (req, res) => {
     },
   });
 
-  res.json({
-    answer,
-    id: data.id,
-  });
+  res.json({ answer, id: data.id });
 });
