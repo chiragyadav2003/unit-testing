@@ -2,23 +2,33 @@ import { describe, expect, it, vi } from 'vitest';
 import request from 'supertest';
 import { app } from '../index';
 import { prisma } from '../libs/__mocks__/prisma';
+import { RequestMethodEnum } from '@prisma/client';
 
 // * add mocking
-vi.mock('../libs/prisma', () => ({
-  prisma: { request: { create: () => {} } },
-}));
+// vi.mock('../libs/prisma', () => ({
+//   prisma: { request: { create: () => {} } },
+// }));
 
 // * deep mocking
-// vi.mock('../libs/prisma');
+vi.mock('../libs/prisma');
 
 describe('POST /sum', () => {
   it('should return the sum of two numbers', async () => {
+    prisma.request.create.mockResolvedValue({
+      id: 1,
+      a: 1,
+      b: 2,
+      answer: 3,
+      method: RequestMethodEnum.Sum,
+    });
+
     const res = await request(app).post('/sum').send({
       a: 1,
       b: 2,
     });
     expect(res.statusCode).toBe(200);
     expect(res.body.answer).toBe(3);
+    expect(res.body).toHaveProperty('id');
   });
 
   it('should return 411 if no inputs are provided', async () => {
@@ -49,12 +59,21 @@ describe('GET /sum', () => {
 
 describe('POST /multiply', () => {
   it('should return the product of two numbers', async () => {
+    prisma.request.create.mockResolvedValue({
+      id: 1,
+      a: 1,
+      b: 2,
+      answer: 2,
+      method: RequestMethodEnum.Multiply,
+    });
+
     const res = await request(app).post('/multiply').send({
       a: 1,
       b: 2,
     });
     expect(res.statusCode).toBe(200);
     expect(res.body.answer).toBe(2);
+    expect(res.body).toHaveProperty('id');
   });
 
   it('should return 411 if no inputs are provided', async () => {
