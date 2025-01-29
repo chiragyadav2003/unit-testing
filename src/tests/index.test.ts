@@ -1,15 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 import request from 'supertest';
 import { app } from '../index';
-// import { prisma } from '../libs/prisma';
+import { prisma } from '../libs/__mocks__/prisma';
 
 // * add mocking
-// vi.mock('../libs/prisma', () => ({
-//   prisma: { request: { create: () => {} } },
-// }));
+vi.mock('../libs/prisma', () => ({
+  prisma: { request: { create: () => {} } },
+}));
 
 // * deep mocking
-vi.mock('../libs/prisma');
+// vi.mock('../libs/prisma');
 
 describe('POST /sum', () => {
   it('should return the sum of two numbers', async () => {
