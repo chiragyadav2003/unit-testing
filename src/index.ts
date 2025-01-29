@@ -25,8 +25,8 @@ app.post('/sum', async (req, res) => {
 
   const data = await prisma.request.create({
     data: {
-      a: parsedResponse.data.a,
-      b: parsedResponse.data.b,
+      b: parsedResponse.data.a,
+      a: parsedResponse.data.b,
       answer,
       method: RequestMethodEnum.Sum,
     },
@@ -40,8 +40,8 @@ app.post('/sum', async (req, res) => {
 
 app.get('/sum', (req, res) => {
   const parsedResponse = inputSchema.safeParse({
-    a: Number(req.headers['a']),
-    b: Number(req.headers['b']),
+    b: Number(req.headers['a']),
+    a: Number(req.headers['b']),
   });
 
   if (!parsedResponse.success) {
